@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gadget-freak-backend", "gadget-freak-backend\gadget-freak-backend.csproj", "{C71EDA4F-CDBD-44D3-AA83-307D788B66AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gadget-freak-backend.Tests", "gadget-freak-backend.Tests\gadget-freak-backend.Tests.csproj", "{E9C282D4-9662-405F-844A-988B4BD7EAAC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C71EDA4F-CDBD-44D3-AA83-307D788B66AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C71EDA4F-CDBD-44D3-AA83-307D788B66AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C71EDA4F-CDBD-44D3-AA83-307D788B66AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C71EDA4F-CDBD-44D3-AA83-307D788B66AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9C282D4-9662-405F-844A-988B4BD7EAAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9C282D4-9662-405F-844A-988B4BD7EAAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9C282D4-9662-405F-844A-988B4BD7EAAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9C282D4-9662-405F-844A-988B4BD7EAAC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
