@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d6d01eddf8e04c479ccf1b531f755a4a" Name="Diagram1">
+        <EntityTypeShape EntityType="GadgetFreakDatabaseModel.C__MigrationHistory" Width="1.5" PointX="0.875" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GadgetFreakDatabaseModel.AspNetRoles" Width="1.5" PointX="0.5" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GadgetFreakDatabaseModel.AspNetUserClaims" Width="1.5" PointX="0.5" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GadgetFreakDatabaseModel.AspNetUserLogins" Width="1.5" PointX="1.125" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GadgetFreakDatabaseModel.AspNetUsers" Width="1.5" PointX="3.125" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GadgetFreakDatabaseModel.database_firewall_rules" Width="2" PointX="2.875" PointY="7.5" IsExpanded="true" />
+        <AssociationConnector Association="GadgetFreakDatabaseModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="GadgetFreakDatabaseModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="GadgetFreakDatabaseModel.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="GadgetFreakDatabaseModel.Blog" Width="1.5" PointX="8" PointY="0.875" />
+        <AssociationConnector Association="GadgetFreakDatabaseModel.BlogAspNetUsers" />
+        <EntityTypeShape EntityType="GadgetFreakDatabaseModel.BlogCategory" Width="1.5" PointX="6" PointY="4.25" />
+        <EntityTypeShape EntityType="GadgetFreakDatabaseModel.BlogPost" Width="1.5" PointX="8.625" PointY="1" />
+        <AssociationConnector Association="GadgetFreakDatabaseModel.FK_dbo_BlogCategory_dbo_BlogPost" />
+        <AssociationConnector Association="GadgetFreakDatabaseModel.FK_dbo_AspNetUsers_dbo_BlogPost" />
+        <EntityTypeShape EntityType="GadgetFreakDatabaseModel.BlogPostCOmments" Width="1.5" PointX="6.125" PointY="0.5" />
+        <AssociationConnector Association="GadgetFreakDatabaseModel.FK_dbo_BlogPostComments_dbo_AspNetUsers" />
+        <AssociationConnector Association="GadgetFreakDatabaseModel.FK_dbo_BlogPostComments_dbo_BlogPost" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

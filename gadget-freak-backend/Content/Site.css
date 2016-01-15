@@ -1,24 +1,443 @@
 ﻿body {
+    background: linear-gradient(to bottom, #EFEFEF, #F7F6F1 ) fixed no-repeat;
+    height: 100%;
     padding-top: 50px;
-    padding-bottom: 20px;
+    /*padding-bottom: 50px;*/
 }
 
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+.content-wrapper {
+    padding-top: 20px;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-    white-space: normal;
+.navbar.navbar-default.navbar-fixed-bottom {
+    height: 20px;
+    font-size: 15px;
+    font-weight: 600;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+.navbar-custom {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+    .navbar-custom .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+        background-color: #ae4928;
+        /*background-color: #722e18;*/
+        color: #ffffff;
+    }
+
+    .navbar-custom .dropdown-menu li > a:hover, .dropdown-menu li > a:focus, .dropdown-submenu:hover > a {
+        background-color: #ae4928;
+        background-image: none;
+        color: #ffffff;
+        font-weight: 600;
+    }
+
+/*.dropdown:hover .dropdown-menu{*/
+/*display: block;*/
+/*}*/
+
+.navbar-selected {
+    background-color: #ae4928 !important;
+    color: #ffffff !important;
+}
+
+.navbar-custom > .dropdown-menu-right > .open a {
+    background-color: #ae4928;
+    background-image: none;
+}
+
+.navbar-custom .dropdown-menu {
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+    .navbar-custom .dropdown-menu .divider {
+        margin: 0px;
+    }
+
+footer {
+    /*background-image: url("../img/carbon-fiber100.png");*/
+}
+
+/* Account css */
+.login-container {
+    padding-top: 50px;
+}
+
+.panel-login {
+    border-color: #ccc;
+    -webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
+}
+
+    .panel-login > .panel-heading {
+        color: #00415d;
+        background-color: #fff;
+        border-color: #fff;
+        text-align: center;
+    }
+
+        .panel-login > .panel-heading a {
+            text-decoration: none;
+            color: #777;
+            font-weight: bold;
+            font-size: 14px;
+            -webkit-transition: all 0.1s linear;
+            -moz-transition: all 0.1s linear;
+            transition: all 0.1s linear;
+        }
+
+            .panel-login > .panel-heading a.active {
+                color: #ae4928;
+                font-size: 16px;
+            }
+
+        .panel-login > .panel-heading hr {
+            margin-top: 10px;
+            margin-bottom: 0px;
+            clear: both;
+            border: 0;
+            height: 1px;
+            background-image: -webkit-linear-gradient(left,rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.15),rgba(0, 0, 0, 0));
+            background-image: -moz-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
+            background-image: -ms-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
+            background-image: -o-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
+        }
+
+    .panel-login input[type="text"], .panel-login input[type="email"], .panel-login input[type="password"] {
+        height: 35px;
+        border: 1px solid #ddd;
+        font-size: 16px;
+        -webkit-transition: all 0.1s linear;
+        -moz-transition: all 0.1s linear;
+        transition: all 0.1s linear;
+    }
+
+    .panel-login input:hover,
+    .panel-login input:focus {
+        outline: none;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+        border-color: #ccc;
+        /*border-color: #ae4928;*/
+        /*border-color: #bb3e34;*/
+    }
+
+.btn-login {
+    background-color: #59B2E0;
+    outline: none;
+    color: #fff;
+    font-size: 15px;
+    height: 30px;
+    font-weight: normal;
+    padding: 0;
+    text-transform: uppercase;
+}
+
+    .btn-login:hover,
+    .btn-login:focus {
+        color: #fff;
+        background-color: #53A3CD;
+        border-color: #ccc;
+    }
+
+.forgot-password {
+    text-decoration: underline;
+    color: #888;
+}
+
+    .forgot-password:hover,
+    .forgot-password:focus {
+        text-decoration: underline;
+        color: #666;
+    }
+
+.btn-register {
+    background-color: #59B2E0;
+    outline: none;
+    color: #fff;
+    font-size: 15px;
+    height: 30px;
+    font-weight: normal;
+    text-transform: uppercase;
+    border: 1px #59B2E0;
+}
+
+    .btn-register:hover,
+    .btn-register:focus {
+        color: #fff;
+        background-color: #53A3CD;
+        border-color: #ccc;
+    }
+
+.blog-title {
+    color: #666;
+}
+
+    .blog-title:hover {
+        color: #ae4928;
+    }
+
+h2 {
+    color: #666;
+}
+
+.btn-read-more {
+    background-color: #59B2E0;
+    outline: none;
+    color: #fff;
+    font-size: 15px;
+    height: 30px;
+    font-weight: normal;
+    text-transform: uppercase;
+    border: 1px #59B2E0;
+    margin-bottom: 10px;
+}
+
+    .btn-read-more:hover {
+        color: #fff;
+        background-color: #53A3CD;
+        border-color: #ccc;
+    }
+
+.btn-add-post {
+    background-color: #59B2E0;
+    outline: none;
+    color: #fff;
+    font-size: 15px;
+    height: 30px;
+    font-weight: normal;
+    text-transform: uppercase;
+    border: 1px #59B2E0;
+}
+
+    .btn-add-post:hover {
+        color: #fff;
+        background-color: #53A3CD;
+        border-color: #ccc;
+    }
+
+
+.btn-remove {
+    background-color: #ae4928;
+    outline: none;
+    color: #fff;
+    font-size: 15px;
+    height: 30px;
+    font-weight: normal;
+    text-transform: uppercase;
+    border: 1px #59B2E0;
+}
+
+    .btn-remove:hover {
+        color: #fff;
+        background-color: #9c4124;
+        border-color: #ccc;
+    }
+
+.custom-table h4 {
+    padding: 0px;
+    margin: 0px;
+    color: #ae4928;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.custom-table h5 {
+    padding: 0px;
+    margin: 0px;
+    color: #666;
+    font-weight: 600;
+}
+
+.width-20 {
+    width: 20%;
+}
+
+.width-60 {
+    width: 60%;
+}
+
+.detailBox {
+    width: 100%;
+    border: 1px solid #bbb;
+    margin: 0px;
+}
+
+.titleBox {
+    background-color: #f5f5f5;
+    padding: 10px;
+}
+
+    .titleBox label {
+        color: #666;
+        margin: 0;
+        display: inline-block;
+    }
+
+.commentBox {
+    padding: 10px;
+    border-top: 1px dotted #bbb;
+}
+
+    .commentBox .form-group:first-child, .actionBox .form-group:first-child {
+        width: 80%;
+    }
+
+    .commentBox .form-group:nth-child(2), .actionBox .form-group:nth-child(2) {
+        width: 18%;
+    }
+
+.actionBox .form-group * {
+    width: 100%;
+}
+
+.taskDescription {
+    margin-top: 10px;
+}
+
+.commentList {
+    padding: 0;
+    list-style: none;
+    max-height: 500px;
+    overflow: auto;
+}
+
+    .commentList li {
+        margin: 0;
+        margin-top: 10px;
+    }
+
+        .commentList li > div {
+            display: table-cell;
+        }
+
+.commenterImage {
+    width: 30px;
+    margin-right: 5px;
+    height: 100%;
+    float: left;
+}
+
+    .commenterImage img {
+        width: 100%;
+        border-radius: 50%;
+    }
+
+.commentText p {
+    margin: 0;
+}
+
+.sub-text {
+    color: #aaa;
+    font-size: 11px;
+}
+
+.actionBox {
+    border-top: 1px dotted #bbb;
+    padding: 10px;
+}
+
+.h4-map {
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+
+#map {
+    width: 100%;
+    height: 400px;
+    /*margin-top: 20px;*/
+    margin-bottom: 20px;
+}
+
+/* Forum style */
+.forum.table > tbody > tr > td {
+    vertical-align: middle;
+}
+
+.forum .fa {
+    width: 1em;
+    text-align: center;
+}
+
+.forum h3 {
+    margin: 0;
+}
+
+.forum h4 {
+    margin: 0;
+}
+
+.forum.table th.cell-stat {
+    width: 4em;
+}
+
+.forum.table th.cell-stat-2x {
+    width: 14em;
+}
+
+
+@media(max-width:767px) {
+}
+
+@media(min-width:768px) {
+}
+
+@media(min-width:992px) {
+}
+
+@media(max-width:991px) {
+    .btn-add-post {
+        margin-top: 10px;
+    }
+
+    .navbar-header {
+        float: none;
+    }
+
+    .navbar-left, .navbar-right {
+        float: none !important;
+    }
+
+    .navbar-toggle {
+        display: block;
+    }
+
+    .navbar-collapse {
+        border-top: 1px solid transparent;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+
+    .navbar-fixed-top {
+        top: 0;
+        border-width: 0 0 1px;
+    }
+
+    .navbar-collapse.collapse {
+        display: none !important;
+    }
+
+    .navbar-nav {
+        float: none !important;
+        margin-top: 7.5px;
+    }
+
+        .navbar-nav > li {
+            float: none;
+        }
+
+            .navbar-nav > li > a {
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+
+    .collapse.in {
+        display: block !important;
+    }
+}
+
+@media(min-width:1200px) {
 }

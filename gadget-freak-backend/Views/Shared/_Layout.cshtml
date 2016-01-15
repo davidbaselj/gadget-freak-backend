@@ -1,41 +1,137 @@
 ﻿<!DOCTYPE html>
-<html>
+<html class="no-js" lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="author" content="David Bašelj">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>@ViewBag.Title GadgetFreak</title>
+
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <!--[if lt IE 8]><p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p><![endif]-->
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
         <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <a class="navbar-brand" href="@Url.Action("Index","Home")">GadgetFreak</a>
             </div>
-            <div class="navbar-collapse collapse">
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    @if (ViewBag.Selected != null && ViewBag.Selected.Equals("Home"))
+                    {
+                        <li class="navbar-selected">
+                            <a style="color: #fff" href="@Url.Action("Index", "Home")">Home</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a href="@Url.Action("Index", "Home")">Home</a>
+                        </li>
+                    }
+
+                    <li class="dropdown-menu-right dropdown">
+                        <a href="devices/devices.html" class="dropdown-toggle" data-toggle="dropdown">Devices<b class="caret"></b> </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="devices/devices.html">All devices</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="devices/appleAll.html">Apple</a>
+                            </li>
+                            <li>
+                                <a href="#">Samsung</a>
+                            </li>
+                            <li>
+                                <a href="#">HTC</a>
+                            </li>
+                            <li>
+                                <a href="#">Nokia</a>
+                            </li>
+                            <li>
+                                <a href="#">Motorola</a>
+                            </li>
+                            <li>
+                                <a href="#">Lg</a>
+                            </li>
+                            <li>
+                                <a href="#">Lenovo</a>
+                            </li>
+                            <li>
+                                <a href="#">HUAWEI</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Reviews</a>
+                    </li>
+                    <li>
+                        <a href="#">Compare</a>
+                    </li>
+                    @if (ViewBag.Selected != null && ViewBag.Selected.Equals("Blog"))
+                    {
+                        <li class="navbar-selected">
+                            <a style="color: #fff" href="@Url.Action("Index", "Blog")">Blog</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a href="@Url.Action("Index", "Blog")">Blog</a>
+                        </li>
+                    }
+                    <li>
+                        <a href="forum.html">Forum</a>
+                    </li>
+                    @if (ViewBag.Selected != null && ViewBag.Selected.Equals("Contact"))
+                    {
+                        <li class="navbar-selected">
+                            <a style="color: #fff" href="@Url.Action("Contact", "Home")">Contact</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a href="@Url.Action("Contact", "Home")">Contact</a>
+                        </li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
+            <!-- /.navbar-collapse -->
         </div>
-    </div>
-    <div class="container body-content">
+        <!-- /.container -->
+    </nav>
+    <!-- /. Navigation-->
+
+    <div class="container content-wrapper">
         @RenderBody()
-        <hr />
+
+
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <!--<div class="navbar navbar-default navbar-fixed-bottom">-->
+            <hr style="margin-bottom: 5px">
+            <p class="text-muted text-center">GadgetFreak &copy; 2016</p>
+            <!--</div>-->
         </footer>
     </div>
+
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

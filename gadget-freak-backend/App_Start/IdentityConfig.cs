@@ -50,14 +50,15 @@ namespace gadget_freak_backend
                 RequireUniqueEmail = true
             };
 
-            // Configure validation logic for passwords
+            // Configure validation logic for 
             manager.PasswordValidator = new PasswordValidator
             {
                 RequiredLength = 6,
-                RequireNonLetterOrDigit = true,
-                RequireDigit = true,
-                RequireLowercase = true,
-                RequireUppercase = true,
+                RequireNonLetterOrDigit = false,
+                RequireDigit = false,
+                RequireLowercase = false,
+                RequireUppercase = false,
+                
             };
 
             // Configure user lockout defaults
