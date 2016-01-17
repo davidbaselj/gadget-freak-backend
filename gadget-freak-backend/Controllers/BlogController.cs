@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using gadget_freak_backend.Models;
+using Microsoft.AspNet.Identity;
 
 namespace gadget_freak_backend.Controllers
 {
@@ -14,14 +15,20 @@ namespace gadget_freak_backend.Controllers
     {
         private GadgetFreakDatabaseEntities db = new GadgetFreakDatabaseEntities();
 
-        // GET: BlogPosts
-        public ActionResult Index()
+        // GET: Blog
+        public ActionResult Index(string searchString)
         {
-            var blogPost = db.BlogPost.Include(b => b.AspNetUsers).Include(b => b.BlogCategory);
-            return View(blogPost.ToList());
+            if (String.IsNullOrEmpty(searchString))
+            {
+                return View(db.BlogPost.Include(b => b.AspNetUsers).Include(b => b.BlogCategory).OrderByDescending(x => x.CreatedAt).ToList());
+            }
+            else
+            {
+                return View(db.BlogPost.Where(y=>y.Title.Contains(searchString)).Include(b => b.AspNetUsers).Include(b => b.BlogCategory).OrderByDescending(x => x.CreatedAt).ToList());
+            }
         }
 
-        // GET: BlogPosts/Details/5
+        // GET: Blog/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,34 +43,55 @@ namespace gadget_freak_backend.Controllers
             return View(blogPost);
         }
 
-        // GET: BlogPosts/Create
+        // GET: Blog/Create
+        [Authorize]
         public ActionResult Create()
         {
             ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email");
-            ViewBag.Id = new SelectList(db.BlogCategory, "Id", "Name");
+            ViewBag.CategoryId = new SelectList(db.BlogCategory, "Id", "Name");
             return View();
         }
 
-        // POST: BlogPosts/Create
+        // POST: Blog/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,UserId,CategoryId,Title,Content,UpdatedAt,CreatedAt,Image,CommentsId")] BlogPost blogPost)
+        [Authorize]
+        public ActionResult Create([Bind(Include = "Id,UserId,CategoryId,Title,Content,UpdatedAt,CreatedAt,CommentsId")] BlogPost blogPost, HttpPostedFileBase upload)
         {
             if (ModelState.IsValid)
             {
+                blogPost.CreatedAt = DateTime.Now;
+
+                if (upload != null && upload.ContentLength > 0)
+                {
+                    byte[] tmpImage;
+                    using (var reader = new System.IO.BinaryReader(upload.InputStream))
+                    {
+                        tmpImage = reader.ReadBytes(upload.ContentLength);
+                    }
+
+                    blogPost.Image = tmpImage;
+                }
+                else
+                {
+                    blogPost.Image = new byte[] { };
+                }
+
+                blogPost.UserId = User.Identity.GetUserId();
+
                 db.BlogPost.Add(blogPost);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
             ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email", blogPost.UserId);
-            ViewBag.Id = new SelectList(db.BlogCategory, "Id", "Name", blogPost.Id);
+            ViewBag.CategoryId = new SelectList(db.BlogCategory, "Id", "Name", blogPost.CategoryId);
             return View(blogPost);
         }
 
-        // GET: BlogPosts/Edit/5
+        // GET: Blog/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -76,29 +104,45 @@ namespace gadget_freak_backend.Controllers
                 return HttpNotFound();
             }
             ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email", blogPost.UserId);
-            ViewBag.Id = new SelectList(db.BlogCategory, "Id", "Name", blogPost.Id);
+            ViewBag.CategoryId = new SelectList(db.BlogCategory, "Id", "Name", blogPost.CategoryId);
             return View(blogPost);
         }
 
-        // POST: BlogPosts/Edit/5
+        // POST: Blog/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,UserId,CategoryId,Title,Content,UpdatedAt,CreatedAt,Image,CommentsId")] BlogPost blogPost)
+        public ActionResult Edit([Bind(Include = "Id,UserId,CategoryId,Title,Content,UpdatedAt,CreatedAt,CommentsId")] BlogPost blogPost, HttpPostedFileBase upload)
         {
             if (ModelState.IsValid)
             {
+                blogPost.UpdatedAt = DateTime.Now;
+
+                if (upload != null && upload.ContentLength > 0)
+                {
+                    byte[] tmpImage;
+                    using (var reader = new System.IO.BinaryReader(upload.InputStream))
+                    {
+                        tmpImage = reader.ReadBytes(upload.ContentLength);
+                    }
+
+                    blogPost.Image = tmpImage;
+                }
+
+                blogPost.UserId = User.Identity.GetUserId();
+
                 db.Entry(blogPost).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
             ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email", blogPost.UserId);
-            ViewBag.Id = new SelectList(db.BlogCategory, "Id", "Name", blogPost.Id);
+            ViewBag.CategoryId = new SelectList(db.BlogCategory, "Id", "Name", blogPost.CategoryId);
             return View(blogPost);
         }
 
-        // GET: BlogPosts/Delete/5
+        // GET: Blog/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -113,9 +157,10 @@ namespace gadget_freak_backend.Controllers
             return View(blogPost);
         }
 
-        // POST: BlogPosts/Delete/5
+        // POST: Blog/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteConfirmed(int id)
         {
             BlogPost blogPost = db.BlogPost.Find(id);

@@ -78,17 +78,17 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="CategoryId" Type="int" />
-          <Property Name="Title" Type="varchar(max)" />
-          <Property Name="Content" Type="text" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="Title" Type="varchar(max)" Nullable="false" />
+          <Property Name="Content" Type="text" Nullable="false" />
           <Property Name="UpdatedAt" Type="datetime" />
           <Property Name="CreatedAt" Type="datetime" />
           <Property Name="Image" Type="image" />
           <Property Name="CommentsId" Type="int" />
         </EntityType>
-        <EntityType Name="BlogPostCOmments">
+        <EntityType Name="BlogPostComments">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -117,6 +117,30 @@ warning 6002: The table/view 'GadgetFreakDatabase.sys.database_firewall_rules' d
           <Property Name="create_date" Type="datetime" Nullable="false" />
           <Property Name="modify_date" Type="datetime" Nullable="false" />
         </EntityType>
+        <Association Name="FK_BlogPost_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="BlogPost" Type="Self.BlogPost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BlogPost">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogPost_BlogCategory">
+          <End Role="BlogCategory" Type="Self.BlogCategory" Multiplicity="1" />
+          <End Role="BlogPost" Type="Self.BlogPost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BlogCategory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BlogPost">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -173,40 +197,14 @@ warning 6002: The table/view 'GadgetFreakDatabase.sys.database_firewall_rules' d
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_AspNetUsers_dbo_BlogPost">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="BlogPost" Type="Self.BlogPost" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="BlogPost">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_BlogCategory_dbo_BlogPost">
-          <End Role="BlogCategory" Type="Self.BlogCategory" Multiplicity="1" />
-          <End Role="BlogPost" Type="Self.BlogPost" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="BlogCategory">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="BlogPost">
-              <PropertyRef Name="Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_dbo_BlogPostComments_dbo_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="BlogPostCOmments" Type="Self.BlogPostCOmments" Multiplicity="*" />
+          <End Role="BlogPostComments" Type="Self.BlogPostComments" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="BlogPostCOmments">
+            <Dependent Role="BlogPostComments">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
@@ -215,12 +213,12 @@ warning 6002: The table/view 'GadgetFreakDatabase.sys.database_firewall_rules' d
           <End Role="BlogPost" Type="Self.BlogPost" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="BlogPostCOmments" Type="Self.BlogPostCOmments" Multiplicity="*" />
+          <End Role="BlogPostComments" Type="Self.BlogPostComments" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="BlogPost">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="BlogPostCOmments">
+            <Dependent Role="BlogPostComments">
               <PropertyRef Name="PostId" />
             </Dependent>
           </ReferentialConstraint>
@@ -234,7 +232,7 @@ warning 6002: The table/view 'GadgetFreakDatabase.sys.database_firewall_rules' d
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BlogCategory" EntityType="Self.BlogCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BlogPost" EntityType="Self.BlogPost" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="BlogPostCOmments" EntityType="Self.BlogPostCOmments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BlogPostComments" EntityType="Self.BlogPostComments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" store:Type="Views" store:Schema="sys">
             <DefiningQuery>SELECT 
     [database_firewall_rules].[id] AS [id], 
@@ -245,6 +243,14 @@ warning 6002: The table/view 'GadgetFreakDatabase.sys.database_firewall_rules' d
     [database_firewall_rules].[modify_date] AS [modify_date]
     FROM [sys].[database_firewall_rules] AS [database_firewall_rules]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK_BlogPost_AspNetUsers" Association="Self.FK_BlogPost_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="BlogPost" EntitySet="BlogPost" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogPost_BlogCategory" Association="Self.FK_BlogPost_BlogCategory">
+            <End Role="BlogCategory" EntitySet="BlogCategory" />
+            <End Role="BlogPost" EntitySet="BlogPost" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -261,21 +267,13 @@ warning 6002: The table/view 'GadgetFreakDatabase.sys.database_firewall_rules' d
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUsers_dbo_BlogPost" Association="Self.FK_dbo_AspNetUsers_dbo_BlogPost">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="BlogPost" EntitySet="BlogPost" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_BlogCategory_dbo_BlogPost" Association="Self.FK_dbo_BlogCategory_dbo_BlogPost">
-            <End Role="BlogCategory" EntitySet="BlogCategory" />
-            <End Role="BlogPost" EntitySet="BlogPost" />
-          </AssociationSet>
           <AssociationSet Name="FK_dbo_BlogPostComments_dbo_AspNetUsers" Association="Self.FK_dbo_BlogPostComments_dbo_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="BlogPostCOmments" EntitySet="BlogPostCOmments" />
+            <End Role="BlogPostComments" EntitySet="BlogPostComments" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_BlogPostComments_dbo_BlogPost" Association="Self.FK_dbo_BlogPostComments_dbo_BlogPost">
             <End Role="BlogPost" EntitySet="BlogPost" />
-            <End Role="BlogPostCOmments" EntitySet="BlogPostCOmments" />
+            <End Role="BlogPostComments" EntitySet="BlogPostComments" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -340,8 +338,8 @@ warning 6002: The table/view 'GadgetFreakDatabase.sys.database_firewall_rules' d
           <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
-          <NavigationProperty Name="BlogPost" Relationship="GadgetFreakDatabaseModel.FK_dbo_AspNetUsers_dbo_BlogPost" FromRole="AspNetUsers" ToRole="BlogPost" />
-          <NavigationProperty Name="BlogPostCOmments" Relationship="GadgetFreakDatabaseModel.FK_dbo_BlogPostComments_dbo_AspNetUsers" FromRole="AspNetUsers" ToRole="BlogPostCOmments" />
+          <NavigationProperty Name="BlogPost" Relationship="GadgetFreakDatabaseModel.FK_BlogPost_AspNetUsers" FromRole="AspNetUsers" ToRole="BlogPost" />
+          <NavigationProperty Name="BlogPostComments" Relationship="GadgetFreakDatabaseModel.FK_dbo_BlogPostComments_dbo_AspNetUsers" FromRole="AspNetUsers" ToRole="BlogPostComments" />
         </EntityType>
         <EntityType Name="database_firewall_rules">
           <Key>
@@ -412,24 +410,24 @@ warning 6002: The table/view 'GadgetFreakDatabase.sys.database_firewall_rules' d
           </AssociationSet>
           <EntitySet Name="BlogCategory" EntityType="GadgetFreakDatabaseModel.BlogCategory" />
           <EntitySet Name="BlogPost" EntityType="GadgetFreakDatabaseModel.BlogPost" />
-          <EntitySet Name="BlogPostCOmments" EntityType="GadgetFreakDatabaseModel.BlogPostCOmments" />
-          <AssociationSet Name="FK_dbo_AspNetUsers_dbo_BlogPost" Association="GadgetFreakDatabaseModel.FK_dbo_AspNetUsers_dbo_BlogPost">
+          <EntitySet Name="BlogPostComments" EntityType="GadgetFreakDatabaseModel.BlogPostComments" />
+          <AssociationSet Name="FK_BlogPost_AspNetUsers" Association="GadgetFreakDatabaseModel.FK_BlogPost_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="BlogPost" EntitySet="BlogPost" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_BlogPostComments_dbo_AspNetUsers" Association="GadgetFreakDatabaseModel.FK_dbo_BlogPostComments_dbo_AspNetUsers">
-            <End EntitySet="AspNetUsers" Role="AspNetUsers" />
-            <End EntitySet="BlogPostCOmments" Role="BlogPostCOmments" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="BlogPostComments" EntitySet="BlogPostComments" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_BlogCategory_dbo_BlogPost" Association="GadgetFreakDatabaseModel.FK_dbo_BlogCategory_dbo_BlogPost">
+          <AssociationSet Name="FK_BlogPost_BlogCategory" Association="GadgetFreakDatabaseModel.FK_BlogPost_BlogCategory">
             <End Role="BlogCategory" EntitySet="BlogCategory" />
             <End Role="BlogPost" EntitySet="BlogPost" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_BlogPostComments_dbo_BlogPost" Association="GadgetFreakDatabaseModel.FK_dbo_BlogPostComments_dbo_BlogPost">
             <End Role="BlogPost" EntitySet="BlogPost" />
-            <End Role="BlogPostCOmments" EntitySet="BlogPostCOmments" />
+            <End Role="BlogPostComments" EntitySet="BlogPostComments" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="BlogCategory">
           <Key>
             <PropertyRef Name="Id" />
@@ -437,7 +435,7 @@ warning 6002: The table/view 'GadgetFreakDatabase.sys.database_firewall_rules' d
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="BlogPost" Relationship="GadgetFreakDatabaseModel.FK_dbo_BlogCategory_dbo_BlogPost" FromRole="BlogCategory" ToRole="BlogPost" />
+          <NavigationProperty Name="BlogPost" Relationship="GadgetFreakDatabaseModel.FK_BlogPost_BlogCategory" FromRole="BlogCategory" ToRole="BlogPost" />
         </EntityType>
         <EntityType Name="BlogPost">
           <Key>
@@ -445,18 +443,18 @@ warning 6002: The table/view 'GadgetFreakDatabase.sys.database_firewall_rules' d
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="CategoryId" Type="Int32" />
-          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Content" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedAt" Type="DateTime" Precision="3" />
           <Property Name="CreatedAt" Type="DateTime" Precision="3" />
           <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="CommentsId" Type="Int32" />
-          <NavigationProperty Name="AspNetUsers" Relationship="GadgetFreakDatabaseModel.FK_dbo_AspNetUsers_dbo_BlogPost" FromRole="BlogPost" ToRole="AspNetUsers" />
-          <NavigationProperty Name="BlogCategory" Relationship="GadgetFreakDatabaseModel.FK_dbo_BlogCategory_dbo_BlogPost" FromRole="BlogPost" ToRole="BlogCategory" />
-          <NavigationProperty Name="BlogPostCOmments" Relationship="GadgetFreakDatabaseModel.FK_dbo_BlogPostComments_dbo_BlogPost" FromRole="BlogPost" ToRole="BlogPostCOmments" />
+          <NavigationProperty Name="AspNetUsers" Relationship="GadgetFreakDatabaseModel.FK_BlogPost_AspNetUsers" FromRole="BlogPost" ToRole="AspNetUsers" />
+          <NavigationProperty Name="BlogCategory" Relationship="GadgetFreakDatabaseModel.FK_BlogPost_BlogCategory" FromRole="BlogPost" ToRole="BlogCategory" />
+          <NavigationProperty Name="BlogPostComments" Relationship="GadgetFreakDatabaseModel.FK_dbo_BlogPostComments_dbo_BlogPost" FromRole="BlogPost" ToRole="BlogPostComments" />
         </EntityType>
-        <EntityType Name="BlogPostCOmments">
+        <EntityType Name="BlogPostComments">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -466,13 +464,11 @@ warning 6002: The table/view 'GadgetFreakDatabase.sys.database_firewall_rules' d
           <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedAt" Type="DateTime" Precision="3" />
           <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="AspNetUsers" Relationship="GadgetFreakDatabaseModel.FK_dbo_BlogPostComments_dbo_AspNetUsers" FromRole="BlogPostCOmments" ToRole="AspNetUsers" />
-          <NavigationProperty Name="BlogPost" Relationship="GadgetFreakDatabaseModel.FK_dbo_BlogPostComments_dbo_BlogPost" FromRole="BlogPostCOmments" ToRole="BlogPost" />
+          <NavigationProperty Name="AspNetUsers" Relationship="GadgetFreakDatabaseModel.FK_dbo_BlogPostComments_dbo_AspNetUsers" FromRole="BlogPostComments" ToRole="AspNetUsers" />
+          <NavigationProperty Name="BlogPost" Relationship="GadgetFreakDatabaseModel.FK_dbo_BlogPostComments_dbo_BlogPost" FromRole="BlogPostComments" ToRole="BlogPost" />
         </EntityType>
-        <Association Name="FK_dbo_AspNetUsers_dbo_BlogPost">
-          <End Type="GadgetFreakDatabaseModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+        <Association Name="FK_BlogPost_AspNetUsers">
+          <End Type="GadgetFreakDatabaseModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
           <End Type="GadgetFreakDatabaseModel.BlogPost" Role="BlogPost" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
@@ -484,26 +480,26 @@ warning 6002: The table/view 'GadgetFreakDatabase.sys.database_firewall_rules' d
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_dbo_BlogPostComments_dbo_AspNetUsers">
-          <End Type="GadgetFreakDatabaseModel.AspNetUsers" Multiplicity="1" Role="AspNetUsers" />
-          <End Type="GadgetFreakDatabaseModel.BlogPostCOmments" Multiplicity="*" Role="BlogPostCOmments" />
+          <End Type="GadgetFreakDatabaseModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
+          <End Type="GadgetFreakDatabaseModel.BlogPostComments" Role="BlogPostComments" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="BlogPostCOmments">
+            <Dependent Role="BlogPostComments">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_BlogCategory_dbo_BlogPost">
+        <Association Name="FK_BlogPost_BlogCategory">
           <End Type="GadgetFreakDatabaseModel.BlogCategory" Role="BlogCategory" Multiplicity="1" />
-          <End Type="GadgetFreakDatabaseModel.BlogPost" Role="BlogPost" Multiplicity="0..1" />
+          <End Type="GadgetFreakDatabaseModel.BlogPost" Role="BlogPost" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="BlogCategory">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="BlogPost">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="CategoryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -511,17 +507,17 @@ warning 6002: The table/view 'GadgetFreakDatabase.sys.database_firewall_rules' d
           <End Type="GadgetFreakDatabaseModel.BlogPost" Role="BlogPost" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="GadgetFreakDatabaseModel.BlogPostCOmments" Role="BlogPostCOmments" Multiplicity="*" />
+          <End Type="GadgetFreakDatabaseModel.BlogPostComments" Role="BlogPostComments" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="BlogPost">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="BlogPostCOmments">
+            <Dependent Role="BlogPostComments">
               <PropertyRef Name="PostId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -626,9 +622,9 @@ warning 6002: The table/view 'GadgetFreakDatabase.sys.database_firewall_rules' d
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="BlogPostCOmments">
-            <EntityTypeMapping TypeName="GadgetFreakDatabaseModel.BlogPostCOmments">
-              <MappingFragment StoreEntitySet="BlogPostCOmments">
+          <EntitySetMapping Name="BlogPostComments">
+            <EntityTypeMapping TypeName="GadgetFreakDatabaseModel.BlogPostComments">
+              <MappingFragment StoreEntitySet="BlogPostComments">
                 <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
                 <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
                 <ScalarProperty Name="Comment" ColumnName="Comment" />

@@ -12,7 +12,7 @@ namespace gadget_freak_backend.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class BlogPostCOmments
+    public partial class BlogPostComments
     {
         public int Id { get; set; }
         public int PostId { get; set; }

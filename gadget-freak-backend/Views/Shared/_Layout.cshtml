@@ -96,9 +96,18 @@
                             <a href="@Url.Action("Index", "Blog")">Blog</a>
                         </li>
                     }
-                    <li>
-                        <a href="forum.html">Forum</a>
-                    </li>
+                    @if (ViewBag.Selected != null && ViewBag.Selected.Equals("Forum"))
+                    {
+                        <li class="navbar-selected">
+                            <a style="color: #fff" href="@Url.Action("Index", "Forum")">Forum</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a href="@Url.Action("Index", "Forum")">Forum</a>
+                        </li>
+                    }
                     @if (ViewBag.Selected != null && ViewBag.Selected.Equals("Contact"))
                     {
                         <li class="navbar-selected">

@@ -1,82 +1,71 @@
-﻿@model IEnumerable<gadget_freak_backend.Models.BlogPost>
+﻿@using Microsoft.AspNet.Identity
+@model IEnumerable<gadget_freak_backend.Models.BlogPost>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Blog";
     ViewBag.Selected = "Blog";
 }
 
-<h2>Index</h2>
+<div class="row">
+    <div class="col-md-6">
+        @using (Html.BeginForm("Index","Blog", FormMethod.Get))
+        {
+            <div class="input-group">
+                <input type="text" class="form-control search-box" placeholder="Search blog..." name="searchString">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                </span>
+            </div>
+        }
+    </div>
+    <div class="col-md-6">
+        @if (User.Identity.IsAuthenticated)
+        {
+            @Html.ActionLink("Create New post", "Create", "Blog", new { @class = "btn btn-info btn-add-post" })
+        }
+    </div>
+</div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.CategoryId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Content)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UpdatedAt)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Image)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CommentsId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AspNetUsers.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BlogCategory.Name)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.CategoryId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Content)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UpdatedAt)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedAt)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Image)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CommentsId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AspNetUsers.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BlogCategory.Name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
+@foreach (var item in Model)
+{
+    <div class="row blog-post" style="padding-top: 20px;">
+        <!-- First Blog Post -->
+        <div class="container">
+            <div class="col-lg-12" style="background-color: #ffffff">
+                <h3 style="padding-top: 15px">
+                    <a href="@Url.Action("Details","Blog", new { id = item.Id})" class="blog-title">@item.Title</a>
+                </h3>
+                <p>
+                    <i class="fa fa-clock-o"></i> Posted on @item.CreatedAt, 2015 at 10:00 PM by @item.AspNetUsers.UserName.Split('@')[0]
+                    <br />
+                    Category: @item.BlogCategory.Name
+                </p>
+                <hr>
+
+                @if (item.Image != null && item.Image.Length > 1)
+                {
+                    <a href="@Url.Action("Details", "Blog", new {id = item.Id})">
+                        <img src="data:image;base64,@System.Convert.ToBase64String(item.Image)" class="img-responsive" />
+
+                    </a>
+                }
+                <br>
+                <p>@item.Content.Substring(0, Math.Min(item.Content.Length, 300))...</p>
+                <!-- Evryone is allowed to see posts -->
+                <a class="btn btn-read-more" href="@Url.Action("Details", "Blog", new {id = item.Id})">Read More ...<i class="fa fa-angle-right"></i></a>
+                <!-- Only admin or creator can delete or edit post -->
+
+                @if (User.IsInRole("Admin"))
+                {
+                    <a class="btn btn-remove pull-right" href="@Url.Action("Delete", "Blog", new {id = item.Id})" style="height: 30px;"><i class="fa fa-trash-o fa-lg"></i></a>
+                }
+                @if (User.IsInRole("Admin") || User.Identity.GetUserId() == item.UserId)
+                {
+                    <a class="btn btn-remove pull-right" href="@Url.Action("Edit", "Blog", new {id = item.Id})" style="height: 30px; margin-right: 10px;"><i class="fa fa-pencil-square-o fa-lg"></i></a>
+                }
+
+            </div>
+        </div>
+    </div>
 }
-
-</table>

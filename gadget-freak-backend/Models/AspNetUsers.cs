@@ -21,7 +21,7 @@ namespace gadget_freak_backend.Models
             this.AspNetUserLogins = new HashSet<AspNetUserLogins>();
             this.AspNetRoles = new HashSet<AspNetRoles>();
             this.BlogPost = new HashSet<BlogPost>();
-            this.BlogPostCOmments = new HashSet<BlogPostCOmments>();
+            this.BlogPostComments = new HashSet<BlogPostComments>();
         }
     
         public string Id { get; set; }
@@ -46,6 +46,6 @@ namespace gadget_freak_backend.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BlogPost> BlogPost { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BlogPostCOmments> BlogPostCOmments { get; set; }
+        public virtual ICollection<BlogPostComments> BlogPostComments { get; set; }
     }
 }

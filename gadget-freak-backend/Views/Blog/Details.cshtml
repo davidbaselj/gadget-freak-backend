@@ -1,90 +1,44 @@
-﻿@model gadget_freak_backend.Models.BlogPost
+﻿@using Microsoft.AspNet.Identity
+@model gadget_freak_backend.Models.BlogPost
 
 @{
     ViewBag.Title = "Details";
+    ViewBag.Selected = "Blog";
 }
 
-<h2>Details</h2>
+<div class="row blog-post" style="padding-top: 20px;">
+    <!-- First Blog Post -->
+    <div class="container">
+        <div class="col-lg-12" style="background-color: #ffffff">
+            <h3 style="padding-top: 15px">
+                <a href="#" class="blog-title">@Model.Title</a>
+            </h3>
+            <p>
+                <i class="fa fa-clock-o"></i> Posted on @Model.CreatedAt, 2015 at 10:00 PM by @Model.AspNetUsers.UserName.Split('@')[0]
+                <br />
+                Category: @Model.BlogCategory.Name
+            </p>
+            <hr>
 
-<div>
-    <h4>BlogPost</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.CategoryId)
-        </dt>
+            @if (Model.Image != null)
+            {
+                <a href="">
+                    <img src="data:image;base64,@System.Convert.ToBase64String(Model.Image)" class="img-responsive" />
 
-        <dd>
-            @Html.DisplayFor(model => model.CategoryId)
-        </dd>
+                </a>
+            }
+            <br>
+            <p>@Model.Content</p>
+            @if (User.IsInRole("Admin"))
+            {
+                <a class="btn btn-remove pull-right" href="@Url.Action("Delete", "Blog", new {id = Model.Id})" style="height: 30px;"><i class="fa fa-trash-o fa-lg"></i></a>
+            }
+            @if (User.IsInRole("Admin") || User.Identity.GetUserId() == Model.UserId)
+            {
+                <a class="btn btn-remove pull-right" href="@Url.Action("Edit", "Blog", new {id = Model.Id})" style="height: 30px; margin-right: 10px;"><i class="fa fa-pencil-square-o fa-lg"></i></a>
+            }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Content)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Content)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UpdatedAt)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UpdatedAt)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreatedAt)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Image)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Image)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CommentsId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CommentsId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AspNetUsers.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AspNetUsers.Email)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.BlogCategory.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BlogCategory.Name)
-        </dd>
-
-    </dl>
+            @Html.ActionLink("Back to blog", null, null, null, new { href = Request.UrlReferrer, style="margin-bottom: 10px;" })
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

@@ -16,12 +16,12 @@
         <AssociationConnector Association="GadgetFreakDatabaseModel.AspNetUserRoles" ManuallyRouted="false" />
         <EntityTypeShape EntityType="GadgetFreakDatabaseModel.Blog" Width="1.5" PointX="8" PointY="0.875" />
         <AssociationConnector Association="GadgetFreakDatabaseModel.BlogAspNetUsers" />
-        <EntityTypeShape EntityType="GadgetFreakDatabaseModel.BlogCategory" Width="1.5" PointX="6" PointY="4.25" />
-        <EntityTypeShape EntityType="GadgetFreakDatabaseModel.BlogPost" Width="1.5" PointX="8.625" PointY="1" />
-        <AssociationConnector Association="GadgetFreakDatabaseModel.FK_dbo_BlogCategory_dbo_BlogPost" />
-        <AssociationConnector Association="GadgetFreakDatabaseModel.FK_dbo_AspNetUsers_dbo_BlogPost" />
-        <EntityTypeShape EntityType="GadgetFreakDatabaseModel.BlogPostCOmments" Width="1.5" PointX="6.125" PointY="0.5" />
+        <EntityTypeShape EntityType="GadgetFreakDatabaseModel.BlogCategory" Width="1.5" PointX="5.875" PointY="5.875" />
+        <EntityTypeShape EntityType="GadgetFreakDatabaseModel.BlogPost" Width="1.5" PointX="5.875" PointY="0.875" />
+        <EntityTypeShape EntityType="GadgetFreakDatabaseModel.BlogPostComments" Width="1.5" PointX="8.125" PointY="1.25" />
+        <AssociationConnector Association="GadgetFreakDatabaseModel.FK_BlogPost_AspNetUsers" />
         <AssociationConnector Association="GadgetFreakDatabaseModel.FK_dbo_BlogPostComments_dbo_AspNetUsers" />
+        <AssociationConnector Association="GadgetFreakDatabaseModel.FK_BlogPost_BlogCategory" />
         <AssociationConnector Association="GadgetFreakDatabaseModel.FK_dbo_BlogPostComments_dbo_BlogPost" />
         </Diagram>
     </edmx:Diagrams>

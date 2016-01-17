@@ -33,6 +33,6 @@ namespace gadget_freak_backend.Models
         public virtual DbSet<database_firewall_rules> database_firewall_rules { get; set; }
         public virtual DbSet<BlogCategory> BlogCategory { get; set; }
         public virtual DbSet<BlogPost> BlogPost { get; set; }
-        public virtual DbSet<BlogPostCOmments> BlogPostCOmments { get; set; }
+        public virtual DbSet<BlogPostComments> BlogPostComments { get; set; }
     }
 }

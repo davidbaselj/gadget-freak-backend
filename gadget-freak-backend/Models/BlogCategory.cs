@@ -7,8 +7,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.ComponentModel.DataAnnotations.Schema;
-
 namespace gadget_freak_backend.Models
 {
     using System;
@@ -16,10 +14,17 @@ namespace gadget_freak_backend.Models
     
     public partial class BlogCategory
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public BlogCategory()
+        {
+            this.BlogPost = new HashSet<BlogPost>();
+        }
+    
         public int Id { get; set; }
         public string Name { get; set; }
         public System.DateTime CreatedAt { get; set; }
     
-        public virtual BlogPost BlogPost { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BlogPost> BlogPost { get; set; }
     }
 }
