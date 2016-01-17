@@ -23,6 +23,10 @@
         {
             @Html.ActionLink("Create New post", "Create", "Blog", new { @class = "btn btn-info btn-add-post" })
         }
+        @if (User.IsInRole("Admin"))
+        {
+            @Html.ActionLink("Logging", "Logging", "Blog", new { @class = "btn btn-info btn-add-post" })
+        }
     </div>
 </div>
 

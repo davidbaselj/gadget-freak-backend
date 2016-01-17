@@ -8,7 +8,7 @@
         <EntityTypeShape EntityType="GadgetFreakDatabaseModel.C__MigrationHistory" Width="1.5" PointX="0.875" PointY="7.625" IsExpanded="true" />
         <EntityTypeShape EntityType="GadgetFreakDatabaseModel.AspNetRoles" Width="1.5" PointX="0.5" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="GadgetFreakDatabaseModel.AspNetUserClaims" Width="1.5" PointX="0.5" PointY="3.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="GadgetFreakDatabaseModel.AspNetUserLogins" Width="1.5" PointX="1.125" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GadgetFreakDatabaseModel.AspNetUserLogins" Width="1.5" PointX="0.5" PointY="5.5" IsExpanded="true" />
         <EntityTypeShape EntityType="GadgetFreakDatabaseModel.AspNetUsers" Width="1.5" PointX="3.125" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="GadgetFreakDatabaseModel.database_firewall_rules" Width="2" PointX="2.875" PointY="7.5" IsExpanded="true" />
         <AssociationConnector Association="GadgetFreakDatabaseModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
@@ -23,6 +23,9 @@
         <AssociationConnector Association="GadgetFreakDatabaseModel.FK_dbo_BlogPostComments_dbo_AspNetUsers" />
         <AssociationConnector Association="GadgetFreakDatabaseModel.FK_BlogPost_BlogCategory" />
         <AssociationConnector Association="GadgetFreakDatabaseModel.FK_dbo_BlogPostComments_dbo_BlogPost" />
+        <EntityTypeShape EntityType="GadgetFreakDatabaseModel.BlogLogging" Width="1.5" PointX="11.625" PointY="4.75" />
+        <AssociationConnector Association="GadgetFreakDatabaseModel.FK_BlogLogging_BlogPost" />
+        <AssociationConnector Association="GadgetFreakDatabaseModel.FK_BlogLogging_AspNetUsers" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

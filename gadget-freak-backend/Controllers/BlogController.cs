@@ -24,7 +24,13 @@ namespace gadget_freak_backend.Controllers
             }
             else
             {
-                return View(db.BlogPost.Where(y=>y.Title.Contains(searchString)).Include(b => b.AspNetUsers).Include(b => b.BlogCategory).OrderByDescending(x => x.CreatedAt).ToList());
+                var searchByTitles =
+                    db.BlogPost.Where(y => y.Title.Contains(searchString) || y.Content.Contains(searchString))
+                        .Include(b => b.AspNetUsers)
+                        .Include(b => b.BlogCategory)
+                        .OrderByDescending(x => x.CreatedAt)
+                        .ToList();
+                return View(searchByTitles);
             }
         }
 
@@ -81,7 +87,14 @@ namespace gadget_freak_backend.Controllers
 
                 blogPost.UserId = User.Identity.GetUserId();
 
+                BlogLogging bl = new BlogLogging();
+                bl.BlogId = blogPost.Id;
+                bl.UserId = blogPost.UserId;
+                bl.LogDate = DateTime.Now;
+
+                
                 db.BlogPost.Add(blogPost);
+                db.BlogLogging.Add(bl);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -92,6 +105,7 @@ namespace gadget_freak_backend.Controllers
         }
 
         // GET: Blog/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -113,6 +127,7 @@ namespace gadget_freak_backend.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Edit([Bind(Include = "Id,UserId,CategoryId,Title,Content,UpdatedAt,CreatedAt,CommentsId")] BlogPost blogPost, HttpPostedFileBase upload)
         {
             if (ModelState.IsValid)
@@ -129,10 +144,15 @@ namespace gadget_freak_backend.Controllers
 
                     blogPost.Image = tmpImage;
                 }
+                BlogLogging bl = new BlogLogging();
+                bl.BlogId = blogPost.Id;
+                bl.UserId = blogPost.UserId;
+                bl.LogDate = DateTime.Now;
 
                 blogPost.UserId = User.Identity.GetUserId();
-
+                
                 db.Entry(blogPost).State = EntityState.Modified;
+                db.BlogLogging.Add(bl);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -167,6 +187,14 @@ namespace gadget_freak_backend.Controllers
             db.BlogPost.Remove(blogPost);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        // GET: Blog/Logging
+        [Authorize(Roles = "Admin")]
+        public ActionResult Logging()
+        {
+            List<BlogLogging> logs = db.BlogLogging.OrderByDescending(x=>x.LogDate).Include(x=>x.BlogPost).Include(y=>y.AspNetUsers).ToList();
+            return View(logs);
         }
 
         protected override void Dispose(bool disposing)

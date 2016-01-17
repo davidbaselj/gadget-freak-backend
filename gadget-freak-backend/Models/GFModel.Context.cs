@@ -34,5 +34,6 @@ namespace gadget_freak_backend.Models
         public virtual DbSet<BlogCategory> BlogCategory { get; set; }
         public virtual DbSet<BlogPost> BlogPost { get; set; }
         public virtual DbSet<BlogPostComments> BlogPostComments { get; set; }
+        public virtual DbSet<BlogLogging> BlogLogging { get; set; }
     }
 }

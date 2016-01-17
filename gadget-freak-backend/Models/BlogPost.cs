@@ -20,14 +20,15 @@ namespace gadget_freak_backend.Models
         public BlogPost()
         {
             this.BlogPostComments = new HashSet<BlogPostComments>();
+            this.BlogLogging = new HashSet<BlogLogging>();
         }
     
         public int Id { get; set; }
         public string UserId { get; set; }
         public int CategoryId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Title can't be empty")]
         public string Title { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Content can't be empty")]
         [DataType(DataType.MultilineText)]
         public string Content { get; set; }
         public Nullable<System.DateTime> UpdatedAt { get; set; }
@@ -39,5 +40,7 @@ namespace gadget_freak_backend.Models
         public virtual BlogCategory BlogCategory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BlogPostComments> BlogPostComments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BlogLogging> BlogLogging { get; set; }
     }
 }

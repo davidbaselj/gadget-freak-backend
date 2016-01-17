@@ -1,0 +1,39 @@
+﻿@model  IEnumerable<gadget_freak_backend.Models.BlogLogging>
+
+@{
+    ViewBag.Title = "Logs";
+    ViewBag.Selected = "Blog";
+}
+
+<table class="table table-bordered table-condensed table-hover table-responsive">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BlogPost.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AspNetUsers.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LogDate)
+        </th>
+    </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BlogPost.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AspNetUsers.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LogDate)
+            </td>
+        </tr>
+    }
+</table>
+
+@Html.ActionLink("Back to blog", null, null, null, new { href = Request.UrlReferrer, style = "margin-bottom: 10px;" })
