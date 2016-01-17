@@ -185,6 +185,7 @@
     <Compile Include="Controllers\ForumController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ReviewController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -202,6 +203,9 @@
       <DependentUpon>GFModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\BlogCategory.cs">
+      <DependentUpon>GFModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BlogLogging.cs">
       <DependentUpon>GFModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\BlogPost.cs">
@@ -250,6 +254,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\site.css" />
+    <Content Include="Img\coming-soon.png" />
     <Content Include="Models\GFModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>GFModel.edmx</DependentUpon>
@@ -281,6 +286,7 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Properties\PublishProfiles\gadget-freak - Web Deploy.pubxml" />
+    <Content Include="Robots.txt" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\c3.js" />
@@ -346,6 +352,8 @@
     <Content Include="Views\Blog\Edit.cshtml" />
     <Content Include="Views\Blog\Index.cshtml" />
     <Content Include="Views\Forum\Index.cshtml" />
+    <Content Include="Views\Review\Index.cshtml" />
+    <None Include="Views\Blog\Logging.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

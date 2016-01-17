@@ -9,9 +9,10 @@ namespace gadget_freak_backend.Controllers
 {
     public class HomeController : Controller
     {
-
+        GadgetFreakDatabaseEntities db = new GadgetFreakDatabaseEntities();
         public ActionResult Index()
         {
+
             return View();
         }
 

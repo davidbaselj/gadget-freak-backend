@@ -45,7 +45,7 @@
                         </li>
                     }
 
-                    <li class="dropdown-menu-right dropdown">
+                    @*<li class="dropdown-menu-right dropdown">
                         <a href="devices/devices.html" class="dropdown-toggle" data-toggle="dropdown">Devices<b class="caret"></b> </a>
                         <ul class="dropdown-menu">
                             <li>
@@ -77,10 +77,23 @@
                                 <a href="#">HUAWEI</a>
                             </li>
                         </ul>
-                    </li>
+                    </li>*@
                     <li>
-                        <a href="#">Reviews</a>
+                        <a href="#">Devices</a>
                     </li>
+
+                    @if (ViewBag.Selected != null && ViewBag.Selected.Equals("Review"))
+                    {
+                        <li class="navbar-selected">
+                            <a style="color: #fff" href="@Url.Action("Index", "Review")">Reviews</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a href="@Url.Action("Index", "Review")">Reviews</a>
+                        </li>
+                    }
                     <li>
                         <a href="#">Compare</a>
                     </li>
@@ -132,6 +145,21 @@
     <div class="container content-wrapper">
         @RenderBody()
 
+        @*<div>
+            <script>
+                (function () {
+                    var cx = '015369570296799550493:43flbqwcjak';
+                    var gcse = document.createElement('script');
+                    gcse.type = 'text/javascript';
+                    gcse.async = true;
+                    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+                        '//cse.google.com/cse.js?cx=' + cx;
+                    var s = document.getElementsByTagName('script')[0];
+                    s.parentNode.insertBefore(gcse, s);
+                })();
+            </script>
+            <gcse:search></gcse:search>
+        </div>*@
 
         <footer>
             <!--<div class="navbar navbar-default navbar-fixed-bottom">-->
